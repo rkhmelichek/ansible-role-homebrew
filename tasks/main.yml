@@ -78,17 +78,25 @@
     dest: "{{ homebrew_repo_dir }}"
     update: no
 
+- name: check for existing brew symlink
+  stat:
+    path: "{{ homebrew_prefix }}/bin/brew"
+  register: homebrew_symlink
+
 - name: link brew binary
   file:
     src: "{{ homebrew_repo_dir }}/bin/brew"
     dest: "{{ homebrew_prefix }}/bin/brew"
     state: link
+  when: homebrew_symlink.stat.exists == false
 
 - name: run brew update to complete installation
   command: "{{ homebrew_prefix }}/bin/brew update --force"
   environment:
     HOMEBREW_NO_ANALYTICS_THIS_RUN: "1"
     HOMEBREW_NO_ANALYTICS_MESSAGE_OUTPUT: "1"
+  when: homebrew_symlink.stat.exists == false
 
 - name: turn off analytics
   command: "{{ homebrew_prefix }}/bin/brew analytics off"
+  when: homebrew_symlink.stat.exists == false
