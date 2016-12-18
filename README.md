@@ -1,5 +1,5 @@
-Homebrew
-========
+ansible-role-homebrew
+=====================
 
 [![Build Status](https://travis-ci.org/rkhmelichek/ansible-role-homebrew.svg?branch=master)](https://travis-ci.org/rkhmelichek/ansible-role-homebrew)
 
