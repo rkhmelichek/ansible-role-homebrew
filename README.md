@@ -1,7 +1,9 @@
-Role Name
-=========
+Homebrew
+========
 
-A brief description of the role goes here.
+[![Build Status](https://travis-ci.org/rkhmelichek/ansible-role-homebrew.svg?branch=master)](https://travis-ci.org/rkhmelichek/ansible-role-homebrew)
+
+Installs [Homebrew](http://brew.sh/) on macOS.
 
 Requirements
 ------------
