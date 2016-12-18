@@ -1,5 +1,4 @@
 ---
-
 - name: create directories
   file:
     path: "{{ homebrew_prefix }}/{{ item }}"

@@ -1,3 +1,4 @@
+---
 homebrew_prefix: "/usr/local"
 homebrew_repo_dir: "{{ homebrew_prefix }}/Homebrew"
 homebrew_cache_dir: "{{ lookup('env', 'HOME') }}/Library/Caches/Homebrew"
