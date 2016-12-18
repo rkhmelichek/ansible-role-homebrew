@@ -5,7 +5,7 @@ language: objective-c
 
 before_install:
   # Uninstall existing Homebrew installation.
-  - 'ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"'
+  - 'echo "y\n" | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"'
   - rm -rf /usr/local/Homebrew
   - rm -rf /usr/local/Caskroom
   - rm -rf /usr/local/bin/brew
