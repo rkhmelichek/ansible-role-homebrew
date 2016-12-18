@@ -76,6 +76,7 @@
   git:
     repo: "{{ brew_git_repo }}"
     dest: "{{ homebrew_repo_dir }}"
+    version: master
     update: no
 
 - name: check for existing brew symlink
