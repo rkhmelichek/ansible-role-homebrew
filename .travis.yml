@@ -23,5 +23,15 @@ script:
   - which brew
   - brew help
 
+  # Run the playbook a second time to ensure that it's idempotent.
+  - PLAYBOOK_OUTPUT=$(mktemp)
+  - ansible-playbook tests/test.yml -i tests/inventory | tee ${PLAYBOOK_OUTPUT}
+  - >
+      cat ${PLAYBOOK_OUTPUT}
+      | grep -A 1 'PLAY RECAP'
+      | grep -q 'ok=.*changed=0.*unreachable=0.*failed=0'
+      && (echo 'Playbook is idempotent' && exit 0)
+      || (echo 'Playbook is NOT idempotent' && exit 1)
+
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
