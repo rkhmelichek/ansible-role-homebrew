@@ -46,6 +46,7 @@
   register: clt_installed
   become: true
   ignore_errors: yes
+  changed_when: false
 
 - block:
   - name: touch temporary file, {{ clt_placeholder_file }}, that enables the 'softwareupdate' utility to list the Command Line Tools
@@ -75,6 +76,7 @@
   git:
     repo: "{{ brew_git_repo }}"
     dest: "{{ homebrew_repo_dir }}"
+    update: no
 
 - name: link brew binary
   file:
