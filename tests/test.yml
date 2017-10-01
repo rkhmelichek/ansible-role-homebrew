@@ -1,4 +1,5 @@
 ---
+
 - hosts: localhost
   roles:
     - ansible-role-homebrew
