@@ -2,7 +2,7 @@
 
 homebrew_prefix: "/usr/local"
 homebrew_repo_dir: "{{ homebrew_prefix }}/Homebrew"
-homebrew_cache_dir: "{{ lookup('env', 'HOME') }}/Library/Caches/Homebrew"
+homebrew_cache_dir: "{{ ansible_env.HOME }}/Library/Caches/Homebrew"
 
 homebrew_user: "{{ lookup('env', 'USER') }}"
 homebrew_group: "admin"
