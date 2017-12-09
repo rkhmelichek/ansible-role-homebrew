@@ -1,6 +1,6 @@
 ---
 
-- name: create directories
+- name: Create directories
   file:
     path: "{{ homebrew_prefix }}/{{ item }}"
     state: directory
@@ -21,7 +21,7 @@
     - share
     - var
 
-- name: create directories (zsh refuses to read from these directories if group writable)
+- name: Create directories (zsh refuses to read from these directories if group writable)
   file:
     path: "{{ homebrew_prefix }}/{{ item }}"
     state: directory
@@ -33,7 +33,7 @@
     - share/zsh
     - share/zsh/site-functions
 
-- name: create cache directory
+- name: Create cache directory
   file:
     path: "{{ homebrew_cache_dir }}"
     state: directory
@@ -42,7 +42,7 @@
     mode: 0775
   become: true
 
-- name: register whether the Command Line Tools have been installed
+- name: Register whether the Command Line Tools have been installed
   shell: /usr/bin/xcode-select -print-path 2>/dev/null
   register: clt_installed
   become: true
@@ -50,55 +50,55 @@
   changed_when: false
 
 - block:
-  - name: touch temporary file, {{ clt_placeholder_file }}, that enables the 'softwareupdate' utility to list the Command Line Tools
+  - name: Touch temporary file, {{ clt_placeholder_file }}, that enables the 'softwareupdate' utility to list the Command Line Tools
     file:
       path: "{{ clt_placeholder_file }}"
       state: touch
 
-  - name: search for latest version of Command Line Tools
+  - name: Search for latest version of Command Line Tools
     shell: softwareupdate -l | grep -E '^ *\* Command Line Tools' | sed 's/^ *\* //' | tail -n 1
     register: clt_version
 
-  - name: install Command Line Tools - {{ clt_version.stdout }}
+  - name: Install Command Line Tools - {{ clt_version.stdout }}
     command: /usr/sbin/softwareupdate -i '{{ clt_version.stdout }}'
 
-  - name: set active developer directory
+  - name: Set active developer directory
     command: /usr/bin/xcode-select --switch /Library/Developer/CommandLineTools
 
   always:
-    - name: remove temporary file
+    - name: Remove temporary file
       file:
         path: "{{ clt_placeholder_file }}"
         state: absent
   become: true
   when: clt_installed.stdout == ""
 
-- name: clone {{ brew_git_repo }}
+- name: Clone {{ brew_git_repo }}
   git:
     repo: "{{ brew_git_repo }}"
     dest: "{{ homebrew_repo_dir }}"
     version: master
     update: no
 
-- name: check for existing brew symlink
+- name: Check for existing brew symlink
   stat:
     path: "{{ homebrew_prefix }}/bin/brew"
   register: homebrew_symlink
 
-- name: link brew binary
+- name: Link brew binary
   file:
     src: "{{ homebrew_repo_dir }}/bin/brew"
     dest: "{{ homebrew_prefix }}/bin/brew"
     state: link
   when: homebrew_symlink.stat.exists == false
 
-- name: run brew update to complete installation
+- name: Run brew update to complete installation
   command: "{{ homebrew_prefix }}/bin/brew update --force"
   environment:
     HOMEBREW_NO_ANALYTICS_THIS_RUN: "1"
     HOMEBREW_NO_ANALYTICS_MESSAGE_OUTPUT: "1"
   when: homebrew_symlink.stat.exists == false
 
-- name: turn off analytics
+- name: Turn off analytics
   command: "{{ homebrew_prefix }}/bin/brew analytics off"
   when: homebrew_symlink.stat.exists == false
