@@ -10,8 +10,8 @@
   become: true
   with_items:
     - Cellar
-    - Homebrew
     - Frameworks
+    - Homebrew
     - bin
     - etc
     - include
