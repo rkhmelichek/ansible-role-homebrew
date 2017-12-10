@@ -9,6 +9,7 @@
     mode: 0775
   become: true
   with_items:
+    - Caskroom
     - Cellar
     - Frameworks
     - Homebrew
