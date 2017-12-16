@@ -22,18 +22,6 @@
     - share
     - var
 
-- name: Create directories (zsh refuses to read from these directories if group writable)
-  file:
-    path: "{{ homebrew_prefix }}/{{ item }}"
-    state: directory
-    owner: "{{ homebrew_user }}"
-    group: "{{ homebrew_group }}"
-    mode: 0755
-  become: true
-  with_items:
-    - share/zsh
-    - share/zsh/site-functions
-
 - name: Create cache directory
   file:
     path: "{{ homebrew_cache_dir }}"
