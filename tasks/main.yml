@@ -31,6 +31,18 @@
     mode: 0775
   become: true
 
+# Make sure this directory has the correct permissions.
+# If another program creates this first (looking at you Parallels Tools), it could munge the permissions.
+# This causes the 'brew services' command to error out.
+- name: Create user LaunchAgents directory
+  file:
+    path: "{{ ansible_env.HOME }}/Library/LaunchAgents"
+    state: directory
+    owner: "{{ homebrew_user }}"
+    group: "{{ homebrew_group }}"
+    mode: 0755
+  become: true
+
 - name: Register whether the Command Line Tools have been installed
   shell: /usr/bin/xcode-select -print-path 2>/dev/null
   register: clt_installed
