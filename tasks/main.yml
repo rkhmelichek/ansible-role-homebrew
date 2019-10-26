@@ -57,7 +57,7 @@
       state: touch
 
   - name: Search for latest version of Command Line Tools
-    shell: softwareupdate -l | grep -E '^ *\* Command Line Tools' | sed 's/^ *\* //' | tail -n 1
+    shell: "softwareupdate -l | grep -E '^\* Label: Command Line Tools' | sed 's/^\* Label: //' | tail -n 1"
     register: clt_version
 
   - name: Install Command Line Tools - {{ clt_version.stdout }}
