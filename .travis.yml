@@ -20,7 +20,7 @@ install:
 
 script:
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  - travis_retry ansible-playbook tests/test.yml -i tests/inventory
+  - travis_wait ansible-playbook tests/test.yml -i tests/inventory
   - which brew
   - brew help
 
