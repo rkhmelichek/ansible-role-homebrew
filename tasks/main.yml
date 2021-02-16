@@ -12,7 +12,6 @@
     - Caskroom
     - Cellar
     - Frameworks
-    - Homebrew
     - bin
     - etc
     - include
@@ -21,6 +20,15 @@
     - sbin
     - share
     - var
+
+- name: Create Homebrew directory
+  file:
+    path: "{{ homebrew_prefix }}/Homebrew"
+    state: directory
+    owner: "{{ homebrew_user }}"
+    group: "{{ homebrew_group }}"
+    mode: 0755
+  become: true
 
 - name: Create cache directory
   file:
